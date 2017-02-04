@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    <title>地区</title>
+    <style>
+        *{
+          margin:0;
+          padding: 0;
+          font-family: "微软雅黑";
+        }
+        #changeP{
+          position: absolute;
+          top:0;
+          left: 0;
+          background: #888;
+          color:#fff;
+          width: 100%;
+          min-height: 40px;
+          line-height: 40px;
+          text-align: center;
+          border-bottom: 1px solid #ccc;
+        }
+        #hasSelected{
+          color: #fff;
+          height: 40px;
+          line-height: 40px;
+          background: #888;
+          text-align: center;
+          cursor: pointer;
+        }
+        ul{
+          position: absolute;
+          top:42px;
+          left:0;
+          width:100%;
+          padding: 0 15px;
+          list-style: none;
+          margin: 0;
+          box-sizing: border-box;
+          background: #fff;
+        }
+        ul li{
+          height: 36px;
+          line-height: 36px;
+          text-align: center;
+          cursor: pointer;
+          border-bottom: 1px solid #ccc;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="inner">
+        <p id="changeP">中国</p>
+        <ul id=showProvince></ul>
+        <ul id=showCity></ul>
+        <ul id=showCounty></ul>
+      </div>
+    </div>
+    <script src="js/jquery.js" charset="utf-8"></script>
+    <script src="js/area.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      console.log(province);
+      console.log(city);
+      console.log(district);
+      var liProvince="",
+            liCity = "",
+            liCounty = "";
+      // 定义显示结果
+      var chooseArea = "中国 ";
+      // 定义省份下标
+      var pIndex = "";
+      // 定义城市下标
+      var cIndex = "";
+
+      // 显示省份
+      for (var i = 0; i < province.length; i++) {
+        liProvince += "<li>"+province[i]+"</li>";
+      }
+      $("#showProvince").append(liProvince);
+
+      // 点击省份显示相应省份的二级城市
+      $("#showProvince li").off("click").on("click",function(){
+        $("#showProvince").hide();//隐藏省份
+        pIndex = $(this).index();
+
+        // 修改显示结果
+        chooseArea += $(this).html();
+        chooseArea += " ";
+        $("#changeP").html(chooseArea);
+
+        console.log(city[pIndex]);
+        for (var j = 0; j < city[pIndex].length; j++) {
+          liCity += "<li>" + city[pIndex][j] + "</li>";
+        }
+        $("#showCity").append(liCity);
+
+        // 点击城市显示三级城市
+        $("#showCity li").off("click").on("click",function(){
+          $("#showCity").hide();//隐藏城市
+          cIndex = $(this).index();
+
+          // 修改显示结果
+          chooseArea += $(this).html();
+          chooseArea += " ";
+          $("#changeP").html(chooseArea);
+
+          console.log(district[pIndex][cIndex]);
+          for (var k = 0; k < district[pIndex][cIndex].length; k++) {
+            liCounty += "<li>" + district[pIndex][cIndex][k] + "</li>";
+          }
+          $("#showCounty").append(liCounty);
+
+          // 点击县级城市
+          $("#showCounty li").off("click").on("click",function () {
+            // 修改显示结果
+            $("#showCounty").hide();
+            chooseArea += $(this).html();
+            $("#changeP").html(chooseArea);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
