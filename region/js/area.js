@@ -1,7 +1,7 @@
 /**
  * jquery.area.js
  * 移动端省市区三级联动选择插件
- * author: 锐不可挡
+ * author: 吴之全
  * date: 2016-06-17
  **/
 
